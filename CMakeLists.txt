@@ -144,7 +144,7 @@ macro(add_thirdparty_dependency target_name outfile)
     add_custom_target(${target_name} DEPENDS ${outfile})
 endmacro()
 
-add_thirdparty_dependency(flatbuffers ${FLATBUFFERS_HEADERS})
+add_thirdparty_dependency(flatbuffers "${TFMICRO_DOWNLOAD_DIR}/flatbuffers")
 add_thirdparty_dependency(kissfft ${KISSFFT_HEADERS})
 
 include(FetchContent)
