@@ -139,7 +139,13 @@ class _GenerateFeature(tf.Module):
     zeros_tail = tf.zeros(
         number_of_elements - index_end,  # type: ignore
         dtype=tf.int32)
-    energy_slice = energy_output[index_start:index_end]
+
+    # Use int32 slice bounds
+    _begin   = tf.constant([index_start], dtype=tf.int32)
+    _end     = tf.constant([index_end],   dtype=tf.int32)
+    _strides = tf.constant([1],           dtype=tf.int32)
+    energy_slice = tf.strided_slice(energy_output, begin=_begin, end=_end,
+                                    strides=_strides)
     energy_output = tf.concat([zeros_head, energy_slice, zeros_tail],
                               0)  # type: ignore
     energy_output = tf.cast(energy_output, dtype=tf.uint32)  # type: ignore
